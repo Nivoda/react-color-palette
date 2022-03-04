@@ -17,5 +17,5 @@ export function validHex(value: string): boolean {
     return hex.test(value[value.length - 1]);
   }
 
-  return /\w/i.test(value) || value === "";
+  return (/\w/i.test(value) && !/\d/.test(value)) || value === "";
 }

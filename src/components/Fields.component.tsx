@@ -17,13 +17,16 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
   }, [valueHEX.inputted, getValueHEX]);
 
   const changeHEX = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
+    let value = e.target.value;
 
-    console.log(value, "original value");
     if (validHex(value)) {
-      console.log(toColor("hex", value), 'toColor("hex", value)');
+      if (!value.startsWith("#")) {
+        value = `#${value}`;
+
+        onChange(toColor("hex", value));
+        setValueHEX({ ...valueHEX, value });
+      }
       onChange(toColor("hex", value));
-      console.log(valueHEX, "valueHEX");
       setValueHEX({ ...valueHEX, value });
     }
   };
@@ -35,7 +38,8 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
           <input
             className="rcp-fields-element-input"
             value={valueHEX.value}
-            pattern="/^#?(?:[0-9a-f]{3}){1,2}$/i"
+            // pattern="/^#[0-9a-f]{3,6}$/i"
+            // pattern="/^#?(?:[0-9a-f]{3}){1,2}$/i"
             onFocus={(): void => setValueHEX({ ...valueHEX, inputted: true })}
             onChange={changeHEX}
             onBlur={(): void => setValueHEX({ ...valueHEX, inputted: false })}
