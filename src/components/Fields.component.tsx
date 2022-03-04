@@ -19,8 +19,11 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
   const changeHEX = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
 
+    console.log(value, "original value");
     if (validHex(value)) {
+      console.log(toColor("hex", value), 'toColor("hex", value)');
       onChange(toColor("hex", value));
+      console.log(valueHEX, "valueHEX");
       setValueHEX({ ...valueHEX, value });
     }
   };
