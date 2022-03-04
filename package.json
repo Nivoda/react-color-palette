@@ -1,6 +1,6 @@
 {
   "name": "react-color-palette",
-  "version": "6.2.0",
+  "version": "6.2.0_alpha",
   "description": "🎨 Lightweight Color Picker component for React.",
   "main": "lib/index.js",
   "module": "lib/index.module.js",
@@ -91,5 +91,8 @@
     "standard-version": "^9.3.1",
     "typescript": "^4.3.5",
     "vite": "^2.4.3"
+  },
+  "dependencies": {
+    "meow": "^10.1.2"
   }
 }
