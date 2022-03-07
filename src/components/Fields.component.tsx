@@ -22,11 +22,6 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
     if (validHex(value)) {
       if (!value.startsWith("#")) {
         value = `#${value}`;
-
-        // onChange(toColor("hex", value));
-        // setValueHEX({ ...valueHEX, value });
-
-        // return;
       }
       onChange(toColor("hex", value));
       setValueHEX({ ...valueHEX, value });
