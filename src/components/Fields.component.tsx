@@ -5,7 +5,7 @@ import { roundFloat } from "../utils/roundFloat.util";
 import { toColor } from "../utils/toColor.util";
 import { validHex } from "../utils/validate.util";
 
-const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element => {
+const UpperFloor = ({ color, hideHEX, onChange, onChangeComplete }: UpperFloorProps): JSX.Element => {
   const getValueHEX = useCallback(() => ({ value: color.hex, inputted: false }), [color.hex]);
 
   const [valueHEX, setValueHEX] = useState(getValueHEX);
@@ -24,6 +24,8 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
         value = `#${value}`;
       }
       onChange(toColor("hex", value));
+      if (onChangeComplete) onChangeComplete(toColor("hex", value));
+
       setValueHEX({ ...valueHEX, value });
     }
   };
@@ -37,7 +39,8 @@ const UpperFloor = ({ color, hideHEX, onChange }: UpperFloorProps): JSX.Element 
             value={valueHEX.value}
             onFocus={(): void => setValueHEX({ ...valueHEX, inputted: true })}
             onChange={changeHEX}
-            onBlur={(): void => setValueHEX({ ...valueHEX, inputted: false })}
+            // onBlur={(): void => setValueHEX({ ...valueHEX, inputted: false })}
+            onBlur={changeHEX}
           />
           <label className="rcp-fields-element-label">HEX</label>
         </div>
@@ -139,13 +142,21 @@ const LowerFloor = ({ color, hideRGB, hideHSV, alpha, onChange }: LowerFloorProp
   );
 };
 
-export const Fields = ({ color, hideHEX, hideRGB, hideHSV, alpha, onChange }: FieldsProps): JSX.Element => {
+export const Fields = ({
+  color,
+  hideHEX,
+  hideRGB,
+  hideHSV,
+  alpha,
+  onChange,
+  onChangeComplete,
+}: FieldsProps): JSX.Element => {
   return (
     <>
       {(!hideHEX || !hideRGB || !hideHSV) && (
         <div className="rcp-fields">
           <LowerFloor color={color} hideRGB={hideRGB} hideHSV={hideHSV} alpha={alpha} onChange={onChange} />
-          <UpperFloor color={color} hideHEX={hideHEX} onChange={onChange} />
+          <UpperFloor color={color} hideHEX={hideHEX} onChange={onChange} onChangeComplete={onChangeComplete} />
         </div>
       )}
     </>
